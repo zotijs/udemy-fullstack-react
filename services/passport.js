@@ -23,7 +23,7 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: "/auth/google/callback",
-      proxy: true
+      proxy: true //solve the oauth url_mismatch error
     },
     (accessToken, refreshToken, profile, done) => {
       //query if user exists inside the collection

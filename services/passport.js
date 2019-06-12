@@ -25,22 +25,17 @@ passport.use(
       callbackURL: "/auth/google/callback",
       proxy: true //solve the oauth url_mismatch error
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       //query if user exists inside the collection
-      User.findOne({ googleId: profile.id }).then(existingUser => {
-        if (existingUser) {
-          done(null, existingUser);
-        } else {
-          //save a new  user
-          new User({
-            googleId: profile.id
-          })
-            .save()
-            .then(user => {
-              done(null, user);
-            });
-        }
-      });
+      const existingUser = await User.findOne({ googleId: profile.id });
+
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+
+      //save a new  user
+      const user = await new User({ googleId: profile.id }).save();
+      done(null, user);
     }
   )
 );

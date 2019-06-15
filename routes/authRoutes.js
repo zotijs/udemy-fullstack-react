@@ -9,13 +9,19 @@ module.exports = app => {
   );
 
   //jumps to the arrow function inside the GoogleStrategy inside the passport.js
-  app.get("/auth/google/callback", passport.authenticate("google"));
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google"),
+    (req, res) => {
+      res.redirect("/surveys");
+    }
+  );
 
   app.get("/api/logout", (req, res) => {
     //logout() attached to the request by passport
     req.logout();
 
-    res.send(req.user);
+    res.redirect("/");
   });
 
   app.get("/api/current_user", (req, res) => {

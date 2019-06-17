@@ -25,4 +25,4 @@ yarn-error.log*
 
 #stripe keys
 .env.development
-#.env.production
+.env.production

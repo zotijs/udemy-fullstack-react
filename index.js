@@ -5,6 +5,7 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const keys = require("./config/keys");
 require("./models/User"); //first declare the schema
+require("./models/Survey");
 require("./services/passport"); //then use it inside the passport.js
 
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
@@ -27,6 +28,7 @@ app.use(passport.session());
 
 require("./routes/authRoutes")(app);
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   //express will serve production assets like
